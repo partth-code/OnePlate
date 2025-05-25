@@ -22,7 +22,6 @@ const Header = () => {
     { name: 'About', path: '/about' },
     { name: 'Contributors', path: '/contributors' },
     { name: 'Partners', path: '/partners' },
-    { name: 'Profile', path: '/profile' },
   ];
 
   return (
@@ -56,12 +55,20 @@ const Header = () => {
                 <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-green-500 scale-x-0 transition-transform duration-300 hover:scale-x-100"></span>
               </Link>
             ))}
-            <Link
-              to="/login"
-              className="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-all duration-300 hover:scale-105"
-            >
-              Login
-            </Link>
+            <div className="flex space-x-3">
+              <Link
+                to="/login"
+                className="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-all duration-300 hover:scale-105"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="border-2 border-green-500 text-green-500 px-6 py-2 rounded-full hover:bg-green-500 hover:text-white transition-all duration-300 hover:scale-105"
+              >
+                Register
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -86,13 +93,22 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              to="/login"
-              className="block mx-4 mt-2 bg-green-500 text-white px-4 py-2 rounded-full text-center hover:bg-green-600 transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Login
-            </Link>
+            <div className="px-4 pt-2 space-y-2">
+              <Link
+                to="/login"
+                className="block bg-green-500 text-white px-4 py-2 rounded-full text-center hover:bg-green-600 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="block border-2 border-green-500 text-green-500 px-4 py-2 rounded-full text-center hover:bg-green-500 hover:text-white transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Register
+              </Link>
+            </div>
           </div>
         )}
       </nav>

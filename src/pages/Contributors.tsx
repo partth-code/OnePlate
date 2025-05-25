@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Crown, Star, Award, Users, TrendingUp, Target, Zap } from 'lucide-react';
+import { Crown, Star, Award, Users, TrendingUp, Target, Zap, Trophy, Medal } from 'lucide-react';
 
 const Contributors = () => {
   const topContributors = [
@@ -31,13 +30,13 @@ const Contributors = () => {
   ];
 
   const leaderboard = [
-    { rank: 4, name: "David Wilson", impact: "2,200 meals" },
-    { rank: 5, name: "Lisa Thompson", impact: "1,900 meals" },
-    { rank: 6, name: "Alex Kumar", impact: "1,750 meals" },
-    { rank: 7, name: "Maria Garcia", impact: "1,600 meals" },
-    { rank: 8, name: "James Brown", impact: "1,450 meals" },
-    { rank: 9, name: "Sophie Lee", impact: "1,300 meals" },
-    { rank: 10, name: "Robert Taylor", impact: "1,200 meals" }
+    { rank: 4, name: "David Wilson", impact: "2,200 meals", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" },
+    { rank: 5, name: "Lisa Thompson", impact: "1,900 meals", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" },
+    { rank: 6, name: "Alex Kumar", impact: "1,750 meals", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" },
+    { rank: 7, name: "Maria Garcia", impact: "1,600 meals", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" },
+    { rank: 8, name: "James Brown", impact: "1,450 meals", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" },
+    { rank: 9, name: "Sophie Lee", impact: "1,300 meals", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" },
+    { rank: 10, name: "Robert Taylor", impact: "1,200 meals", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=64&h=64&fit=crop&crop=face" }
   ];
 
   const stats = [
@@ -115,32 +114,84 @@ const Contributors = () => {
         </div>
       </section>
 
-      {/* Leaderboard */}
-      <section className="py-20 bg-gray-50">
+      {/* Enhanced Leaderboard */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-green-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Leaderboard</h2>
             <p className="text-xl text-gray-600">Rankings 4-10 of our amazing contributors</p>
           </div>
           
-          <div className="max-w-2xl mx-auto">
-            {leaderboard.map((contributor) => (
-              <div
-                key={contributor.rank}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 mb-4 flex items-center justify-between hover:scale-105"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
-                    #{contributor.rank}
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">{contributor.name}</h3>
-                    <p className="text-gray-600">{contributor.impact}</p>
-                  </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-r from-green-500 to-blue-500 p-6">
+                <div className="flex items-center justify-center space-x-3">
+                  <Trophy className="w-8 h-8 text-white" />
+                  <h3 className="text-2xl font-bold text-white">Top Contributors Leaderboard</h3>
+                  <Trophy className="w-8 h-8 text-white" />
                 </div>
-                <Star className="w-6 h-6 text-yellow-500" />
               </div>
-            ))}
+              
+              <div className="p-6">
+                {leaderboard.map((contributor, index) => (
+                  <div
+                    key={contributor.rank}
+                    className={`flex items-center justify-between p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-102 cursor-pointer mb-4 ${
+                      index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                    } hover:bg-green-50 border border-gray-100 hover:border-green-200`}
+                  >
+                    <div className="flex items-center space-x-6">
+                      {/* Rank with Medal */}
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
+                          contributor.rank === 4 ? 'bg-orange-100 text-orange-600' :
+                          contributor.rank === 5 ? 'bg-purple-100 text-purple-600' :
+                          'bg-green-100 text-green-600'
+                        }`}>
+                          #{contributor.rank}
+                        </div>
+                        {contributor.rank <= 6 && (
+                          <Medal className="w-5 h-5 text-gray-400" />
+                        )}
+                      </div>
+                      
+                      {/* Avatar and Info */}
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={contributor.avatar}
+                          alt={contributor.name}
+                          className="w-14 h-14 rounded-full border-3 border-white shadow-md"
+                        />
+                        <div>
+                          <h3 className="text-lg font-bold text-gray-800">{contributor.name}</h3>
+                          <p className="text-gray-600 font-medium">{contributor.impact}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Progress and Star */}
+                    <div className="flex items-center space-x-4">
+                      <div className="text-right">
+                        <div className="w-24 bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${Math.max(20, 100 - (contributor.rank - 4) * 15)}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                      <Star className="w-6 h-6 text-yellow-500 hover:scale-110 transition-transform" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="bg-gray-50 p-6 text-center">
+                <p className="text-gray-600 mb-4">Want to see your name on this leaderboard?</p>
+                <button className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-all duration-300 hover:scale-105">
+                  Start Contributing Today
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
