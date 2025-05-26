@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Building2, Utensils, Calendar, Users, Star, MapPin } from 'lucide-react';
 
@@ -110,48 +111,47 @@ const Partners = () => {
             {partners.map((partner) => (
               <div
                 key={partner.id}
-                className="relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group cursor-pointer border-2 border-gray-100 hover:border-green-200"
+                className="relative h-64 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group cursor-pointer border-2 border-gray-100 hover:border-green-200"
                 onMouseEnter={() => setHoveredCard(partner.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Logo/Image - Always visible */}
-                <div className="h-40 overflow-hidden">
+                {/* Logo/Image - Always visible when not hovered */}
+                <div className={`absolute inset-0 transition-opacity duration-500 ${
+                  hoveredCard === partner.id ? 'opacity-0' : 'opacity-100'
+                }`}>
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                   />
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <h3 className="text-white text-2xl font-bold text-center px-4">
+                      {partner.name}
+                    </h3>
+                  </div>
                 </div>
                 
-                {/* Name and Type - Always visible */}
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-bold">{partner.name}</h3>
-                    <span className="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs font-medium">
-                      {partner.type}
-                    </span>
-                  </div>
-                  
-                  {/* Description and Impact - Only visible on hover */}
-                  <div className={`transition-all duration-500 ease-in-out ${
-                    hoveredCard === partner.id 
-                      ? 'opacity-100 max-h-32 translate-y-0' 
-                      : 'opacity-0 max-h-0 translate-y-4'
-                  } overflow-hidden`}>
-                    <p className="text-gray-600 text-sm mb-3 leading-relaxed">{partner.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-green-600 font-semibold text-sm">{partner.impact}</span>
-                      <Star className="w-4 h-4 text-yellow-500" />
+                {/* Description and Button - Only visible on hover */}
+                <div className={`absolute inset-0 card-gradient p-6 flex flex-col justify-between transition-opacity duration-500 ${
+                  hoveredCard === partner.id ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-gray-800">{partner.name}</h3>
+                      <span className="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs font-medium">
+                        {partner.type}
+                      </span>
+                    </div>
+                    <p className="text-gray-700 mb-4 leading-relaxed">{partner.description}</p>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-green-600 font-semibold">{partner.impact}</span>
+                      <Star className="w-5 h-5 text-yellow-500" />
                     </div>
                   </div>
                   
-                  {/* Impact only (when not hovered) */}
-                  {hoveredCard !== partner.id && (
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="text-green-600 font-semibold text-sm">{partner.impact}</span>
-                      <Star className="w-4 h-4 text-yellow-500" />
-                    </div>
-                  )}
+                  <button className="button-gradient text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-300 text-center">
+                    More about partner
+                  </button>
                 </div>
               </div>
             ))}
