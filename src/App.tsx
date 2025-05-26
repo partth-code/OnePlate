@@ -11,7 +11,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contributors from "./pages/Contributors";
 import Partners from "./pages/Partners";
-import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -24,7 +23,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col page-gradient">
           <Header />
           <main className="flex-1">
             <Routes>
@@ -32,7 +31,6 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contributors" element={<Contributors />} />
               <Route path="/partners" element={<Partners />} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<NotFound />} />
