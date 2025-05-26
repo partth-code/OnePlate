@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Recycle, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -79,9 +79,11 @@ const Home = () => {
                 <div className="text-white animate-fade-in">
                   <h1 className="text-5xl md:text-7xl font-bold mb-4">{image.title}</h1>
                   <p className="text-xl md:text-2xl mb-8">{image.subtitle}</p>
-                  <button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg hover:bg-green-600 transition-all duration-300 hover:scale-105">
-                    Join Our Mission
-                  </button>
+                  <Link to="/join-mission">
+                    <button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg hover:bg-green-600 transition-all duration-300 hover:scale-105">
+                      Join Our Mission
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -171,9 +173,11 @@ const Home = () => {
                   <span>Impact reporting for your contributions</span>
                 </div>
               </div>
-              <button className="bg-yellow-500 text-white px-8 py-4 rounded-full text-lg hover:bg-yellow-600 transition-all duration-300 hover:scale-105">
-                Schedule Pickup
-              </button>
+              <Link to="/schedule-pickup">
+                <button className="bg-yellow-500 text-white px-8 py-4 rounded-full text-lg hover:bg-yellow-600 transition-all duration-300 hover:scale-105">
+                  Schedule Pickup
+                </button>
+              </Link>
             </div>
             <div className="relative">
               <img
@@ -198,12 +202,16 @@ const Home = () => {
             Join thousands of volunteers, donors, and partners who are working together to end hunger in our communities.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-green-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-              Start Donating
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-green-500 transition-all duration-300 hover:scale-105">
-              Become a Volunteer
-            </button>
+            <Link to="/start-donating">
+              <button className="bg-white text-green-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                Start Donating
+              </button>
+            </Link>
+            <Link to="/become-volunteer">
+              <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-green-500 transition-all duration-300 hover:scale-105">
+                Become a Volunteer
+              </button>
+            </Link>
           </div>
         </div>
       </section>

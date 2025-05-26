@@ -31,7 +31,7 @@ const Footer = () => {
         </div>
 
         {/* Main Footer Content */}
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-gradient">
@@ -54,7 +54,18 @@ const Footer = () => {
               <li><a href="/about" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">About Us</a></li>
               <li><a href="/contributors" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Contributors</a></li>
               <li><a href="/partners" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Partners</a></li>
-              <li><a href="/login" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Login</a></li>
+              <li><a href="/contact" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Contact Us</a></li>
+            </ul>
+          </div>
+
+          {/* Get Involved */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-green-400">Get Involved</h4>
+            <ul className="space-y-2">
+              <li><a href="/start-donating" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Start Donating</a></li>
+              <li><a href="/become-volunteer" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Become a Volunteer</a></li>
+              <li><a href="/start-contributing" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Start Contributing</a></li>
+              <li><a href="/apply-partner" className="text-gray-300 hover:text-green-400 transition-colors hover:translate-x-2 inline-block duration-300">Partner With Us</a></li>
             </ul>
           </div>
 
