@@ -2,12 +2,20 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, Phone, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const SchedulePickup = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     organizationName: '',
     contactPerson: '',
-    email: '',
+    email: user?.email || '',
     phone: '',
     address: '',
     foodType: '',
@@ -17,10 +25,69 @@ const SchedulePickup = () => {
     specialInstructions: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Pickup scheduled:', formData);
-    // Handle form submission here
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to schedule a pickup.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('pickup_requests')
+        .insert([
+          {
+            user_id: user.id,
+            organization_name: formData.organizationName,
+            contact_person: formData.contactPerson,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            food_type: formData.foodType,
+            quantity: formData.quantity,
+            pickup_date: formData.pickupDate,
+            pickup_time: formData.pickupTime,
+            special_instructions: formData.specialInstructions,
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Pickup scheduled successfully!",
+        description: "We'll contact you soon to confirm the details.",
+      });
+
+      // Reset form
+      setFormData({
+        organizationName: '',
+        contactPerson: '',
+        email: user?.email || '',
+        phone: '',
+        address: '',
+        foodType: '',
+        quantity: '',
+        pickupDate: '',
+        pickupTime: '',
+        specialInstructions: ''
+      });
+
+      navigate('/profile');
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -64,13 +131,12 @@ const SchedulePickup = () => {
                         value={formData.organizationName}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        required
                       />
                     </div>
                     
                     <div>
                       <label htmlFor="contactPerson" className="block text-sm font-medium text-gray-700 mb-2">
-                        Contact Person
+                        Contact Person *
                       </label>
                       <input
                         type="text"
@@ -87,7 +153,7 @@ const SchedulePickup = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
+                        Email Address *
                       </label>
                       <input
                         type="email"
@@ -102,7 +168,7 @@ const SchedulePickup = () => {
                     
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
+                        Phone Number *
                       </label>
                       <input
                         type="tel"
@@ -118,7 +184,7 @@ const SchedulePickup = () => {
 
                   <div>
                     <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                      Pickup Address
+                      Pickup Address *
                     </label>
                     <input
                       type="text"
@@ -142,7 +208,6 @@ const SchedulePickup = () => {
                         value={formData.foodType}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        required
                       >
                         <option value="">Select food type</option>
                         <option value="prepared-meals">Prepared Meals</option>
@@ -165,7 +230,6 @@ const SchedulePickup = () => {
                         onChange={handleChange}
                         placeholder="e.g., 50 meals, 10 boxes"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        required
                       />
                     </div>
                   </div>
@@ -173,7 +237,7 @@ const SchedulePickup = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="pickupDate" className="block text-sm font-medium text-gray-700 mb-2">
-                        Preferred Pickup Date
+                        Preferred Pickup Date *
                       </label>
                       <input
                         type="date"
@@ -188,7 +252,7 @@ const SchedulePickup = () => {
                     
                     <div>
                       <label htmlFor="pickupTime" className="block text-sm font-medium text-gray-700 mb-2">
-                        Preferred Pickup Time
+                        Preferred Pickup Time *
                       </label>
                       <select
                         id="pickupTime"
@@ -221,8 +285,12 @@ const SchedulePickup = () => {
                     ></textarea>
                   </div>
                   
-                  <Button type="submit" className="w-full button-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-                    Schedule Pickup
+                  <Button 
+                    type="submit" 
+                    disabled={loading}
+                    className="w-full button-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300"
+                  >
+                    {loading ? 'Scheduling...' : 'Schedule Pickup'}
                   </Button>
                 </form>
               </div>

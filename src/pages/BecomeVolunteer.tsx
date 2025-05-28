@@ -2,14 +2,23 @@
 import React, { useState } from 'react';
 import { Users, Clock, MapPin, Heart, Star, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const BecomeVolunteer = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    email: user?.email || '',
     phone: '',
+    age: '',
     availability: '',
-    interests: [],
+    skills: '',
     experience: '',
     motivation: ''
   });
@@ -69,9 +78,55 @@ const BecomeVolunteer = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Volunteer application submitted:', formData);
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to apply as a volunteer.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      const skillsArray = formData.skills.split(',').map(skill => skill.trim()).filter(skill => skill);
+      
+      const { error } = await supabase
+        .from('volunteers')
+        .insert([
+          {
+            user_id: user.id,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            age: formData.age ? parseInt(formData.age) : null,
+            availability: formData.availability,
+            skills: skillsArray,
+            experience: formData.experience,
+            motivation: formData.motivation
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Application submitted successfully!",
+        description: "We'll review your application and get back to you soon.",
+      });
+
+      navigate('/profile');
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -91,9 +146,6 @@ const BecomeVolunteer = () => {
             Join our community of passionate volunteers who are making a real difference in the fight against hunger. 
             Every hour you contribute helps feed families in need.
           </p>
-          <Button className="button-gradient text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all duration-300">
-            Apply to Volunteer
-          </Button>
         </div>
       </section>
 
@@ -139,7 +191,7 @@ const BecomeVolunteer = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name
+                      Full Name *
                     </label>
                     <input
                       type="text"
@@ -154,7 +206,7 @@ const BecomeVolunteer = () => {
                   
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address
+                      Email Address *
                     </label>
                     <input
                       type="email"
@@ -168,7 +220,7 @@ const BecomeVolunteer = () => {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-3 gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                       Phone Number
@@ -180,13 +232,28 @@ const BecomeVolunteer = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-2">
+                      Age
+                    </label>
+                    <input
+                      type="number"
+                      id="age"
+                      name="age"
+                      value={formData.age}
+                      onChange={handleChange}
+                      min="16"
+                      max="100"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-2">
-                      Availability
+                      Availability *
                     </label>
                     <select
                       id="availability"
@@ -206,6 +273,21 @@ const BecomeVolunteer = () => {
                 </div>
 
                 <div>
+                  <label htmlFor="skills" className="block text-sm font-medium text-gray-700 mb-2">
+                    Skills & Interests
+                  </label>
+                  <input
+                    type="text"
+                    id="skills"
+                    name="skills"
+                    value={formData.skills}
+                    onChange={handleChange}
+                    placeholder="e.g., Food handling, Event planning, Marketing (separate with commas)"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
                   <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
                     Previous Volunteer Experience
                   </label>
@@ -222,7 +304,7 @@ const BecomeVolunteer = () => {
 
                 <div>
                   <label htmlFor="motivation" className="block text-sm font-medium text-gray-700 mb-2">
-                    Why do you want to volunteer with us?
+                    Why do you want to volunteer with us? *
                   </label>
                   <textarea
                     id="motivation"
@@ -236,8 +318,12 @@ const BecomeVolunteer = () => {
                   ></textarea>
                 </div>
                 
-                <Button type="submit" className="w-full button-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-                  Submit Application
+                <Button 
+                  type="submit" 
+                  disabled={loading}
+                  className="w-full button-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300"
+                >
+                  {loading ? 'Submitting...' : 'Submit Application'}
                 </Button>
               </form>
             </div>
@@ -294,9 +380,6 @@ const BecomeVolunteer = () => {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Join hundreds of volunteers who are making a difference in their communities every day.
           </p>
-          <Button className="bg-white text-purple-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-            Apply Now
-          </Button>
         </div>
       </section>
     </div>

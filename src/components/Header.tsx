@@ -1,117 +1,124 @@
 
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, User, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Contributors', path: '/contributors' },
-    { name: 'Partners', path: '/partners' },
-  ];
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'nav-gradient shadow-2xl border-b border-green-500/20' 
-          : 'bg-transparent'
-      }`}
-    >
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-gradient">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="text-2xl font-bold">
             Food <span className="text-green-500">Donate</span>
           </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`relative transition-all duration-300 hover:-translate-y-1 font-medium ${
-                  location.pathname === item.path
-                    ? 'text-green-600 font-bold'
-                    : 'text-gray-800 hover:text-green-600'
-                }`}
-              >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-green-600 scale-x-0 transition-transform duration-300 hover:scale-x-100"></span>
+          
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-gray-700 hover:text-green-500 transition-colors">
+              Home
+            </Link>
+            <Link to="/about" className="text-gray-700 hover:text-green-500 transition-colors">
+              About
+            </Link>
+            <Link to="/contributors" className="text-gray-700 hover:text-green-500 transition-colors">
+              Contributors
+            </Link>
+            <Link to="/partners" className="text-gray-700 hover:text-green-500 transition-colors">
+              Partners
+            </Link>
+            <Link to="/contact" className="text-gray-700 hover:text-green-500 transition-colors">
+              Contact
+            </Link>
+            
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <Link to="/profile" className="flex items-center space-x-2 text-gray-700 hover:text-green-500 transition-colors">
+                  <User className="w-4 h-4" />
+                  <span>Profile</span>
+                </Link>
+                <Button 
+                  onClick={handleSignOut}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center space-x-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
+                </Button>
+              </div>
+            ) : (
+              <Link to="/login">
+                <Button className="bg-green-500 hover:bg-green-600 text-white">
+                  Sign In
+                </Button>
               </Link>
-            ))}
-            <div className="flex space-x-3">
-              <Link
-                to="/login"
-                className="button-gradient text-white px-6 py-2 rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                className="border-2 border-green-500 text-green-600 bg-white/80 px-6 py-2 rounded-full hover:bg-green-500 hover:text-white transition-all duration-300 hover:scale-105 font-semibold backdrop-blur-sm"
-              >
-                Register
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
+            )}
+          </nav>
+          
           <button
-            className="md:hidden p-2 text-gray-800 hover:text-green-600 transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 py-4 card-gradient rounded-lg shadow-2xl border border-green-500/20">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className="block px-4 py-2 text-gray-700 hover:text-green-600 hover:bg-green-50/50 transition-colors font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
+        
+        {isMenuOpen && (
+          <div className="md:hidden py-4 border-t">
+            <div className="flex flex-col space-y-4">
+              <Link to="/" className="text-gray-700 hover:text-green-500 transition-colors">
+                Home
               </Link>
-            ))}
-            <div className="px-4 pt-2 space-y-2">
-              <Link
-                to="/login"
-                className="block button-gradient text-white px-4 py-2 rounded-full text-center font-semibold transition-all duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Login
+              <Link to="/about" className="text-gray-700 hover:text-green-500 transition-colors">
+                About
               </Link>
-              <Link
-                to="/register"
-                className="block border-2 border-green-500 text-green-600 bg-white/80 px-4 py-2 rounded-full text-center hover:bg-green-500 hover:text-white transition-colors font-semibold"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Register
+              <Link to="/contributors" className="text-gray-700 hover:text-green-500 transition-colors">
+                Contributors
               </Link>
+              <Link to="/partners" className="text-gray-700 hover:text-green-500 transition-colors">
+                Partners
+              </Link>
+              <Link to="/contact" className="text-gray-700 hover:text-green-500 transition-colors">
+                Contact
+              </Link>
+              
+              {user ? (
+                <>
+                  <Link to="/profile" className="flex items-center space-x-2 text-gray-700 hover:text-green-500 transition-colors">
+                    <User className="w-4 h-4" />
+                    <span>Profile</span>
+                  </Link>
+                  <Button 
+                    onClick={handleSignOut}
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center space-x-2 w-fit"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </Button>
+                </>
+              ) : (
+                <Link to="/login">
+                  <Button className="bg-green-500 hover:bg-green-600 text-white w-fit">
+                    Sign In
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}
-      </nav>
+      </div>
     </header>
   );
 };

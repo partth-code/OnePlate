@@ -2,13 +2,21 @@
 import React, { useState } from 'react';
 import { Building2, Users, CheckCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ApplyPartner = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     organizationName: '',
     organizationType: '',
     contactPerson: '',
-    email: '',
+    email: user?.email || '',
     phone: '',
     address: '',
     website: '',
@@ -47,9 +55,58 @@ const ApplyPartner = () => {
     "Regular donation schedule"
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Partnership application submitted:', formData);
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to apply as a partner.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('partner_applications')
+        .insert([
+          {
+            user_id: user.id,
+            organization_name: formData.organizationName,
+            organization_type: formData.organizationType,
+            contact_person: formData.contactPerson,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            website: formData.website,
+            description: formData.description,
+            food_type: formData.foodType,
+            estimated_volume: formData.estimatedVolume,
+            current_waste_practices: formData.currentWastePractices,
+            motivations: formData.motivations,
+            expectations: formData.expectations
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Application submitted successfully!",
+        description: "We'll review your partnership application and get back to you soon.",
+      });
+
+      navigate('/profile');
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -321,8 +378,12 @@ const ApplyPartner = () => {
                     </div>
                   </div>
                   
-                  <Button type="submit" className="w-full button-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-                    Submit Partnership Application
+                  <Button 
+                    type="submit" 
+                    disabled={loading}
+                    className="w-full button-gradient text-white py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300"
+                  >
+                    {loading ? 'Submitting...' : 'Submit Partnership Application'}
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </form>

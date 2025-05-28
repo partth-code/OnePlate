@@ -1,8 +1,11 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
@@ -10,8 +13,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contributors from "./pages/Contributors";
 import Partners from "./pages/Partners";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import ContactUs from "./pages/ContactUs";
 import JoinMission from "./pages/JoinMission";
@@ -29,32 +31,61 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <div className="min-h-screen flex flex-col page-gradient">
-          <Header />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contributors" element={<Contributors />} />
-              <Route path="/partners" element={<Partners />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/join-mission" element={<JoinMission />} />
-              <Route path="/schedule-pickup" element={<SchedulePickup />} />
-              <Route path="/start-donating" element={<StartDonating />} />
-              <Route path="/become-volunteer" element={<BecomeVolunteer />} />
-              <Route path="/start-contributing" element={<StartContributing />} />
-              <Route path="/apply-partner" element={<ApplyPartner />} />
-              <Route path="/profile" element={<ContributorProfile />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
-          <Chatbot />
-        </div>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="min-h-screen flex flex-col page-gradient">
+            <Header />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contributors" element={<Contributors />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/login" element={<Auth />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/join-mission" element={<JoinMission />} />
+                <Route path="/start-donating" element={<StartDonating />} />
+                <Route 
+                  path="/schedule-pickup" 
+                  element={
+                    <ProtectedRoute>
+                      <SchedulePickup />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/become-volunteer" 
+                  element={
+                    <ProtectedRoute>
+                      <BecomeVolunteer />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/start-contributing" element={<StartContributing />} />
+                <Route 
+                  path="/apply-partner" 
+                  element={
+                    <ProtectedRoute>
+                      <ApplyPartner />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/profile" 
+                  element={
+                    <ProtectedRoute>
+                      <ContributorProfile />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+            <Chatbot />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

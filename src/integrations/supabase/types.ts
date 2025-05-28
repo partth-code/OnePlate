@@ -9,7 +9,186 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      partner_applications: {
+        Row: {
+          address: string | null
+          contact_person: string
+          created_at: string
+          current_waste_practices: string | null
+          description: string | null
+          email: string
+          estimated_volume: string | null
+          expectations: string | null
+          food_type: string | null
+          id: string
+          motivations: string | null
+          organization_name: string
+          organization_type: string
+          phone: string
+          status: string | null
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          contact_person: string
+          created_at?: string
+          current_waste_practices?: string | null
+          description?: string | null
+          email: string
+          estimated_volume?: string | null
+          expectations?: string | null
+          food_type?: string | null
+          id?: string
+          motivations?: string | null
+          organization_name: string
+          organization_type: string
+          phone: string
+          status?: string | null
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          contact_person?: string
+          created_at?: string
+          current_waste_practices?: string | null
+          description?: string | null
+          email?: string
+          estimated_volume?: string | null
+          expectations?: string | null
+          food_type?: string | null
+          id?: string
+          motivations?: string | null
+          organization_name?: string
+          organization_type?: string
+          phone?: string
+          status?: string | null
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      pickup_requests: {
+        Row: {
+          address: string
+          contact_person: string
+          created_at: string
+          email: string
+          food_type: string | null
+          id: string
+          organization_name: string | null
+          phone: string
+          pickup_date: string
+          pickup_time: string
+          quantity: string | null
+          special_instructions: string | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          address: string
+          contact_person: string
+          created_at?: string
+          email: string
+          food_type?: string | null
+          id?: string
+          organization_name?: string | null
+          phone: string
+          pickup_date: string
+          pickup_time: string
+          quantity?: string | null
+          special_instructions?: string | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          address?: string
+          contact_person?: string
+          created_at?: string
+          email?: string
+          food_type?: string | null
+          id?: string
+          organization_name?: string | null
+          phone?: string
+          pickup_date?: string
+          pickup_time?: string
+          quantity?: string | null
+          special_instructions?: string | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          name?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      volunteers: {
+        Row: {
+          age: number | null
+          availability: string | null
+          created_at: string
+          email: string
+          experience: string | null
+          id: string
+          motivation: string | null
+          name: string
+          phone: string | null
+          skills: string[] | null
+          user_id: string
+        }
+        Insert: {
+          age?: number | null
+          availability?: string | null
+          created_at?: string
+          email: string
+          experience?: string | null
+          id?: string
+          motivation?: string | null
+          name: string
+          phone?: string | null
+          skills?: string[] | null
+          user_id: string
+        }
+        Update: {
+          age?: number | null
+          availability?: string | null
+          created_at?: string
+          email?: string
+          experience?: string | null
+          id?: string
+          motivation?: string | null
+          name?: string
+          phone?: string | null
+          skills?: string[] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
