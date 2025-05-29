@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -20,7 +20,7 @@ const Footer = () => {
                 <Facebook className="w-5 h-5" />
               </a>
               <a href="#" className="text-gray-300 hover:text-green-500 transition-colors">
-                <Twitter className="w-5 h-5" />
+                <span className="text-xl font-bold">𝕏</span>
               </a>
               <a href="#" className="text-gray-300 hover:text-green-500 transition-colors">
                 <Instagram className="w-5 h-5" />
@@ -103,7 +103,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} OnePlate. All rights reserved.</p>
+          <p>&copy; 2025 OnePlate. All rights reserved.</p>
         </div>
       </div>
     </footer>
