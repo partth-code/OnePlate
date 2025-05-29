@@ -1,9 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { supabase } from '@/integrations/supabase/client';
 
 interface ChatMessage {
   id: string;
@@ -11,6 +9,51 @@ interface ChatMessage {
   isBot: boolean;
   timestamp: Date;
 }
+
+const getBotResponse = (message: string): string => {
+  const lowerMessage = message.toLowerCase();
+  
+  // Greeting responses
+  if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+    return "Hello! I'm your OnePlate assistant. How can I help you with food donations, volunteering, or partnerships today?";
+  }
+  
+  if (lowerMessage.includes('good morning') || lowerMessage.includes('good afternoon') || lowerMessage.includes('good evening')) {
+    return "Good day! I'm here to assist you with OnePlate's services. What would you like to know about food donations, volunteering, or partnerships?";
+  }
+  
+  if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+    return "You're welcome! If you have any other questions about OnePlate's services, feel free to ask. We're here to help make a difference in our community.";
+  }
+  
+  // Food donation related responses
+  if (lowerMessage.includes('donate') || lowerMessage.includes('donation')) {
+    return "To donate food, you can schedule a pickup through our platform. Visit the 'Start Donating' page to get started. We accept non-perishable food items and fresh food that meets our safety standards.";
+  }
+  
+  if (lowerMessage.includes('volunteer') || lowerMessage.includes('volunteering')) {
+    return "We'd love to have you as a volunteer! You can apply through our 'Become a Volunteer' page. Volunteers help with food collection, distribution, and community outreach.";
+  }
+  
+  if (lowerMessage.includes('partner') || lowerMessage.includes('partnership')) {
+    return "We welcome partnerships with restaurants, hotels, and food businesses. Visit our 'Apply as Partner' page to learn more about our partnership program and submit your application.";
+  }
+  
+  if (lowerMessage.includes('pickup') || lowerMessage.includes('schedule')) {
+    return "You can schedule a food pickup through our platform. Visit the 'Schedule Pickup' page, fill in the details about your donation, and our team will arrange a convenient pickup time.";
+  }
+  
+  if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone')) {
+    return "You can reach us at:\n- Email: onePlate@gmail.com\n- Phone: +91 12345-67890\n- Address: Indore(M.P.) India";
+  }
+  
+  if (lowerMessage.includes('mission') || lowerMessage.includes('story') || lowerMessage.includes('about')) {
+    return "OnePlate is dedicated to fighting food waste and helping communities in need. We connect food donors with those who need it most, creating a sustainable food distribution network.";
+  }
+  
+  // Default response for unrelated queries
+  return "I appreciate your interest in OnePlate. I'm here to assist you with food donations, volunteering opportunities, partnerships, and general information about our mission. Please feel free to ask about any of these topics, or visit our website for more detailed information.";
+};
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,33 +93,19 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      console.log('Sending message to chatbot:', messageText);
+      // Get response from our simple rule-based system
+      const botResponse = getBotResponse(messageText);
       
-      const { data, error } = await supabase.functions.invoke('chat-with-ai', {
-        body: { message: messageText }
-      });
-
-      console.log('Chatbot response:', data);
-
-      if (error) {
-        console.error('Supabase function error:', error);
-        throw new Error(error.message || 'Failed to get response from chatbot');
-      }
-
-      if (!data || !data.reply) {
-        throw new Error('No response received from chatbot');
-      }
-
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        text: data.reply,
+        text: botResponse,
         isBot: true,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error processing message:', error);
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         text: "I apologize, but I'm having trouble responding right now. Please try again in a moment, or feel free to contact our support team at onePlate@gmail.com or +91 12345-67890.",
@@ -138,7 +167,7 @@ const ChatWidget = () => {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -158,7 +187,7 @@ const ChatWidget = () => {
                   : 'bg-gradient-to-r from-green-500 to-blue-500 text-white'
               }`}
             >
-              <p className="text-sm leading-relaxed">{message.text}</p>
+              <p className="text-sm leading-relaxed whitespace-pre-line">{message.text}</p>
               <span className="text-xs opacity-70 mt-1 block">
                 {formatTime(message.timestamp)}
               </span>
@@ -170,7 +199,6 @@ const ChatWidget = () => {
             )}
           </div>
         ))}
-        
         {isLoading && (
           <div className="flex items-start space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
