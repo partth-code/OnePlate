@@ -67,7 +67,7 @@ const Partners = () => {
 
   const testimonials = [
     {
-      quote: "Partnering with Food Donate has transformed how we handle surplus food. It's incredibly fulfilling to know our excess is feeding families instead of going to waste.",
+      quote: "Partnering with OnePlate has transformed how we handle surplus food. It's incredibly fulfilling to know our excess is feeding families instead of going to waste.",
       author: "Sarah Chen",
       title: "Head Chef, Green Valley Restaurant",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&w=100&h=100&fit=crop&crop=face"
@@ -79,7 +79,7 @@ const Partners = () => {
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=100&h=100&fit=crop&crop=face"
     },
     {
-      quote: "Food Donate doesn't just collect food – they build communities. We're proud to be part of this movement.",
+      quote: "OnePlate doesn't just collect food – they build communities. We're proud to be part of this movement.",
       author: "Lisa Thompson",
       title: "Operations Director, Unity Hotels Group",
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&w=100&h=100&fit=crop&crop=face"

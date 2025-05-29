@@ -12,17 +12,14 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-500/80 via-green-400/80 to-blue-500/80 shadow-lg backdrop-blur-xl bg-opacity-75">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14">
+        <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-3">
-            <div className="relative w-10 h-10">
+            <div className="relative w-12 h-12">
               <img 
                 src="/plate-icon.svg" 
                 alt="OnePlate Icon" 
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain transform hover:rotate-12 transition-transform duration-300"
               />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center">
-                <span className="text-green-500 text-xs">✓</span>
-              </div>
             </div>
             <span className="text-2xl font-bold text-white">
               One<span className="text-blue-100">Plate</span>
