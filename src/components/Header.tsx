@@ -16,7 +16,7 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-3">
             <div className="relative w-12 h-12">
               <img 
-                src="/plate-icon.svg" 
+                src="/oneplate.png" 
                 alt="OnePlate Icon" 
                 className="w-full h-full object-contain transform hover:rotate-12 transition-transform duration-300"
               />
