@@ -12,7 +12,7 @@ const Home = () => {
       subtitle: "Together we can end hunger"
     },
     {
-      url: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3",
+      url: "https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3",
       title: "Zero Food Waste",
       subtitle: "Every meal matters"
     },

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Utensils, Clock, Users, Heart, CheckCircle, ArrowRight } from 'lucide-react';
@@ -177,28 +176,26 @@ const StartDonating = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-orange-500 to-red-500 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Make a Difference?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of donors who are fighting hunger in our community. 
-            Your next meal donation could feed a family tonight.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/schedule-pickup">
-              <Button className="bg-white text-orange-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-                Schedule Donation
-              </Button>
-            </Link>
-            <Link to="/about">
-              <Button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-orange-600 transition-all duration-300">
-                Learn More
-              </Button>
-            </Link>
+      {/* Start Your Donation Journey */}
+      <div className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Start Your Donation Journey
+            </h2>
+            <p className="text-gray-600 mb-8">
+              Join thousands of donors who are making a difference in their communities. Your contribution matters.
+            </p>
+            <div className="flex justify-center">
+              <Link to="/about">
+                <Button className="bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600 transition-all duration-300">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

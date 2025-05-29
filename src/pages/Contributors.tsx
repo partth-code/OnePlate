@@ -1,5 +1,7 @@
 import React from 'react';
 import { Crown, Star, Award, Users, TrendingUp, Target, Zap, Trophy, Medal } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Contributors = () => {
   const topContributors = [
@@ -184,13 +186,6 @@ const Contributors = () => {
                   </div>
                 ))}
               </div>
-              
-              <div className="bg-gray-50 p-6 text-center">
-                <p className="text-gray-600 mb-4">Want to see your name on this leaderboard?</p>
-                <button className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-all duration-300 hover:scale-105">
-                  Start Contributing Today
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -219,24 +214,26 @@ const Contributors = () => {
         </div>
       </section>
 
-      {/* Volunteer CTA */}
-      <section className="py-20 bg-gradient-to-r from-green-500 to-blue-500 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Join Our Heroes?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Every contribution matters, no matter how big or small. Start your journey today 
-            and become part of our growing community of changemakers.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-green-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-              Join Us
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-green-500 transition-all duration-300 hover:scale-105">
-              Apply Now
-            </button>
+      {/* Ready to Join Our Heroes */}
+      <div className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Join Our Heroes?
+            </h2>
+            <p className="text-gray-600 mb-8">
+              Join our community of volunteers and make a real difference in your community. Your time and effort can help feed those in need.
+            </p>
+            <div className="flex justify-center">
+              <Link to="/become-volunteer">
+                <Button className="bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600 transition-all duration-300">
+                  Join Us
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

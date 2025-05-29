@@ -1,4 +1,3 @@
-
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
@@ -17,16 +16,21 @@ serve(async (req) => {
   try {
     const { message } = await req.json();
 
-    const systemPrompt = `You are a helpful AI assistant for Annpurnam, a food donation platform. You should provide warm, friendly, and helpful responses about:
+    const systemPrompt = `You are a helpful AI assistant for OnePlate, a food donation platform. You should provide warm, friendly, and helpful responses about:
 
 1. How to donate food - Guide users to schedule pickups through our platform
 2. How to become a volunteer - Direct them to our volunteer application process
 3. How to join as a partner - Explain our partnership program
 4. Tracking scheduled pickups - Help with understanding their donation status
-5. Contact information - Provide relevant contact details
+5. Contact information - Provide relevant contact details:
+   - Email: onePlate@gmail.com
+   - Phone: +91 12345-67890
+   - Address: Indore(M.P.) India
 6. Our mission and story - Share information about fighting food waste and helping communities
 
-Always be encouraging and supportive. Keep responses concise but informative. If users need to take specific actions, guide them to the appropriate pages on our website.`;
+Always be encouraging and supportive. Keep responses concise but informative. If users need to take specific actions, guide them to the appropriate pages on our website.
+
+If users ask about topics not related to OnePlate, food donation, volunteering, or partnerships, politely redirect them to our main services and mission.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -35,7 +39,7 @@ Always be encouraging and supportive. Keep responses concise but informative. If
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Users, Utensils, HandHeart, ArrowRight, CheckCircle } from 'lucide-react';
@@ -131,35 +130,29 @@ const JoinMission = () => {
         </div>
       </section>
 
-      {/* Action Buttons */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8">Take Action Today</h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-8 rounded-xl text-white">
-              <Users className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">Start Volunteering</h3>
-              <p className="mb-6">Join hundreds of volunteers making a difference every day</p>
-              <Link to="/become-volunteer">
-                <Button className="bg-white text-purple-600 hover:bg-gray-100 w-full">
-                  Start Volunteering
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="bg-gradient-to-br from-orange-500 to-red-500 p-8 rounded-xl text-white">
-              <Utensils className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">Donate Food</h3>
-              <p className="mb-6">Schedule a pickup and turn surplus food into hope</p>
-              <Link to="/schedule-pickup">
-                <Button className="bg-white text-orange-600 hover:bg-gray-100 w-full">
-                  Donate Food
-                </Button>
-              </Link>
+      {/* Take Action Today */}
+      <div className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Take Action Today
+          </h2>
+          <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
+            <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg overflow-hidden">
+              <div className="p-8 text-white">
+                <h3 className="text-2xl font-bold mb-4">Donate Food</h3>
+                <p className="text-white/90 mb-6">
+                  Have surplus food? Donate it to those in need. We make it easy to schedule pickups and ensure your food reaches the right people.
+                </p>
+                <Link to="/start-donating">
+                  <Button className="bg-white text-green-500 hover:bg-blue-50 hover:text-green-600 transition-all duration-300">
+                    Start Donating
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

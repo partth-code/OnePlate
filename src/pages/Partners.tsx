@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { Building2, Utensils, Calendar, Users, Star, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Partners = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -92,122 +92,46 @@ const Partners = () => {
       <section className="py-20 bg-gradient-to-br from-blue-50 to-green-50">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Our Partners</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Together with amazing organizations and individuals, we're building 
-            a sustainable ecosystem that fights hunger and reduces food waste.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Together with our partners, we're building a sustainable food ecosystem that benefits everyone. 
+            Join our network of responsible businesses and organizations making a real impact.
           </p>
         </div>
       </section>
 
-      {/* Partners Grid - Logo Only Initially */}
+      {/* Partner Cards */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Featured Partners</h2>
-            <p className="text-xl text-gray-600">Organizations making a real difference</p>
-          </div>
-          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {partners.map((partner) => (
               <div
                 key={partner.id}
-                className="relative h-64 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group cursor-pointer border-2 border-gray-100 hover:border-green-200"
+                className="bg-white rounded-xl shadow-lg overflow-hidden group relative"
                 onMouseEnter={() => setHoveredCard(partner.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Logo/Image - Always visible when not hovered */}
-                <div className={`absolute inset-0 transition-opacity duration-500 ${
-                  hoveredCard === partner.id ? 'opacity-0' : 'opacity-100'
-                }`}>
+                <div className="aspect-video relative">
                   <img
                     src={partner.logo}
                     alt={partner.name}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <h3 className="text-white text-2xl font-bold text-center px-4">
-                      {partner.name}
-                    </h3>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <h3 className="text-xl font-bold">{partner.name}</h3>
+                    <p className="text-sm opacity-80">{partner.type}</p>
                   </div>
                 </div>
                 
-                {/* Description and Button - Only visible on hover */}
-                <div className={`absolute inset-0 card-gradient p-6 flex flex-col justify-between transition-opacity duration-500 ${
-                  hoveredCard === partner.id ? 'opacity-100' : 'opacity-0'
+                <div className={`absolute inset-0 bg-gradient-to-r from-green-500/95 to-blue-500/95 p-6 flex flex-col justify-end transform transition-transform duration-300 ${
+                  hoveredCard === partner.id ? 'translate-y-0' : 'translate-y-full'
                 }`}>
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-bold text-gray-800">{partner.name}</h3>
-                      <span className="bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs font-medium">
-                        {partner.type}
-                      </span>
-                    </div>
-                    <p className="text-gray-700 mb-4 leading-relaxed">{partner.description}</p>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-green-600 font-semibold">{partner.impact}</span>
-                      <Star className="w-5 h-5 text-yellow-500" />
-                    </div>
-                  </div>
-                  
-                  <button className="button-gradient text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-300 text-center">
-                    More about partner
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Who Can Partner */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Who Can Partner With Us</h2>
-            <p className="text-xl text-gray-600">We welcome all types of food-related businesses and organizations</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {partnerTypes.map((type, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center"
-              >
-                <div className="text-blue-500 mb-4">{type.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{type.title}</h3>
-                <p className="text-gray-600">{type.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">What Our Partners Say</h2>
-            <p className="text-xl text-gray-600">Real stories from our amazing partners</p>
-          </div>
-          
-          <div className="grid lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="mb-6">
-                  <p className="text-gray-600 italic">"{testimonial.quote}"</p>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.author}
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <div>
-                    <h4 className="font-semibold">{testimonial.author}</h4>
-                    <p className="text-gray-600 text-sm">{testimonial.title}</p>
+                  <p className="text-white mb-4">{partner.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-white/80 text-sm">{partner.impact}</span>
+                    <button className="bg-white text-green-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-100 transition-colors">
+                      Learn More
+                    </button>
                   </div>
                 </div>
               </div>
@@ -216,7 +140,7 @@ const Partners = () => {
         </div>
       </section>
 
-      {/* Partnership CTA */}
+      {/* Partnership Benefits */}
       <section className="py-20 bg-gradient-to-r from-blue-500 to-green-500 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -255,9 +179,11 @@ const Partners = () => {
             </div>
             
             <div className="text-center">
-              <button className="bg-white text-blue-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 mb-4">
-                Apply Now
-              </button>
+              <Link to="/apply-partner">
+                <button className="bg-white text-blue-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 mb-4">
+                  Apply Now
+                </button>
+              </Link>
               <p className="text-white/80">
                 Contact us to learn more about partnership opportunities
               </p>
@@ -273,11 +199,7 @@ const Partners = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-lg shadow">
               <MapPin className="w-5 h-5 text-green-500" />
-              <span>partnerships@fooddonate.org</span>
-            </div>
-            <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-lg shadow">
-              <Star className="w-5 h-5 text-yellow-500" />
-              <span>Follow us on social media</span>
+              <span>oneplate85@gmail.com</span>
             </div>
           </div>
         </div>

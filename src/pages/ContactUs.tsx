@@ -1,9 +1,12 @@
-
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, User, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
 
 const ContactUs = () => {
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,10 +14,46 @@ const ContactUs = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Contact form submitted:', formData);
-    // Handle form submission here
+    setLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            created_at: new Date().toISOString()
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you as soon as possible.",
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -105,9 +144,17 @@ const ContactUs = () => {
                   ></textarea>
                 </div>
                 
-                <Button type="submit" className="w-full button-gradient text-white py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-                  <Send className="w-5 h-5 mr-2" />
-                  Send Message
+                <Button 
+                  type="submit" 
+                  disabled={loading}
+                  className="w-full button-gradient text-white py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300"
+                >
+                  {loading ? 'Sending...' : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </div>
@@ -129,7 +176,7 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Email</h3>
-                    <p className="text-gray-600">contact@fooddonate.org</p>
+                    <p className="text-gray-600">onePlate@gmail.com</p>
                   </div>
                 </div>
 
@@ -139,7 +186,7 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Phone</h3>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
+                    <p className="text-gray-600">+91 12345-67890</p>
                   </div>
                 </div>
 
@@ -149,15 +196,15 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Address</h3>
-                    <p className="text-gray-600">123 Food Street, New York, NY 10001</p>
+                    <p className="text-gray-600">Indore(M.P.) India</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-green-500 to-blue-500 p-6 rounded-xl text-white">
+              <div className="bg-green-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-2">Emergency Food Pickup</h3>
                 <p className="mb-4">Need urgent food pickup? Call our 24/7 hotline.</p>
-                <p className="text-2xl font-bold">+1 (555) FOOD-911</p>
+                <p className="text-2xl font-bold">+91 12345-67890</p>
               </div>
             </div>
           </div>

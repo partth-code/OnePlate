@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, Phone, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -100,7 +99,7 @@ const SchedulePickup = () => {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-yellow-50 to-orange-50">
+      <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Schedule Food Pickup</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -319,12 +318,12 @@ const SchedulePickup = () => {
                   </ul>
                 </div>
 
-                <div className="bg-gradient-to-br from-green-500 to-blue-500 p-6 rounded-xl text-white">
+                <div className="bg-white p-6 rounded-xl shadow-lg">
                   <h3 className="text-xl font-bold mb-3">Need Immediate Pickup?</h3>
                   <p className="text-sm mb-4">For urgent food donations, call our emergency hotline.</p>
                   <div className="flex items-center space-x-2">
                     <Phone className="w-5 h-5" />
-                    <span className="font-bold">+1 (555) FOOD-911</span>
+                    <span className="font-bold">+91 12345 67890</span>
                   </div>
                 </div>
               </div>

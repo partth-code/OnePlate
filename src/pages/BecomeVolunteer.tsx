@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Users, Clock, MapPin, Heart, Star, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const BecomeVolunteer = () => {
   const { user } = useAuth();
@@ -373,15 +372,26 @@ const BecomeVolunteer = () => {
         </div>
       </section>
 
-      {/* Next Steps */}
-      <section className="py-20 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join hundreds of volunteers who are making a difference in their communities every day.
-          </p>
+      {/* Ready to Get Started */}
+      <div className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Get Started?
+            </h2>
+            <p className="text-gray-600 mb-8">
+              Join our community of volunteers and make a real difference in your community. Your time and effort can help feed those in need.
+            </p>
+            <div className="flex justify-center">
+              <Link to="/about">
+                <Button className="bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600 transition-all duration-300">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

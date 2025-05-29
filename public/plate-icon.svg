@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Plate Circle -->
+  <circle cx="256" cy="256" r="240" fill="#F3F4F6" stroke="#10B981" stroke-width="16"/>
+  
+  <!-- Inner Circle -->
+  <circle cx="256" cy="256" r="200" fill="#E5E7EB" stroke="#10B981" stroke-width="8"/>
+  
+  <!-- Heart Symbol -->
+  <path d="M256 320C256 320 320 256 320 208C320 176 288 160 256 160C224 160 192 176 192 208C192 256 256 320 256 320Z" fill="#10B981"/>
+  
+  <!-- Food Elements -->
+  <circle cx="200" cy="240" r="16" fill="#10B981"/>
+  <circle cx="312" cy="240" r="16" fill="#10B981"/>
+  <circle cx="256" cy="280" r="16" fill="#10B981"/>
+</svg> 
