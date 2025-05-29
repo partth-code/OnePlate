@@ -60,7 +60,7 @@ const Home = () => {
   };
 
   return (
-    <div className="pt-20">
+    <div>
       {/* Hero Carousel */}
       <section className="relative h-screen overflow-hidden">
         {carouselImages.map((image, index) => (
