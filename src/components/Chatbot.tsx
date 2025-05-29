@@ -1,9 +1,9 @@
 
 import React from 'react';
-import FloatingChatbot from './FloatingChatbot';
+import ChatWidget from './ChatWidget';
 
 const Chatbot = () => {
-  return <FloatingChatbot />;
+  return <ChatWidget />;
 };
 
 export default Chatbot;
