@@ -1,31 +1,31 @@
 # Welcome to OnePlate
 
 ## Project info
+🌍 Project Info – OnePlate: Bridging Surplus to Hunger
+In cities like Mumbai and Delhi, thousands of weddings and large-scale events take place every single day. While these celebrations bring joy to many, they also generate tons of surplus food — enough to feed over 100,000 people daily. At the same time, more than 50,000 individuals in these very cities go to sleep hungry and undernourished.
 
-**URL**: https://lovable.dev/projects/0c25ea54-82af-4848-81b0-adfb810f3445
+The issue is not the availability of food — it's the lack of a real-time, accessible, and reliable system to connect the dots between excess and need.
+
+That’s where OnePlate comes in.
+
+🍽️ OnePlate – One Plate Can Make a Difference
+OnePlate is a tech-driven platform designed to rescue surplus food from events, restaurants, and households, and redistribute it to shelters, orphanages, and individuals who need it the most.
+
+Using a combination of smart logistics, community engagement, and real-time tracking, OnePlate ensures:
+
+💡 Instant alerts from donors (event organizers, caterers, etc.)
+
+🛵 Rapid pickups and safe delivery through partnered NGOs or our own volunteers
+
+📍 Location-based matching of food donors and nearby recipients
+
+🧾 Transparency through donor dashboards and contribution logs
+
+💚 Our Vision
+To create a future where no plate goes wasted, and no person goes hungry.
+With OnePlate, every extra dish becomes a lifeline, every meal shared becomes a story of hope.
 
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
 
 
 
