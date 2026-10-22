@@ -4,6 +4,8 @@
     background: url('/header_img.png') no-repeat;
     background-size:contain ;
     position: relative;
+
+
 }
 
 .header-contents{
@@ -15,6 +17,7 @@
     max-width: 50%;
     bottom: 10%;
     left: 6vw;
+    animation: fadeIN 2s;
 
 }
 
