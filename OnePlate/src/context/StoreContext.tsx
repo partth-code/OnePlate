@@ -1,4 +1,4 @@
-import { createContext , type ReactNode} from "react";
+import {  createContext , useContext, type ReactNode} from "react";
 import { food_list } from "../assets/assets";
 
 type StoreContextProviderProps = {
@@ -10,6 +10,7 @@ type StoreContextType = {
 } ;
 
 export const StoreContext = createContext<StoreContextType | null>(null);
+ 
 
 const StoreContextProvider = ({children}:StoreContextProviderProps) => {
 
@@ -21,5 +22,7 @@ const StoreContextProvider = ({children}:StoreContextProviderProps) => {
         </StoreContext.Provider>
     );
 };
+
+
 
 export default StoreContextProvider;
