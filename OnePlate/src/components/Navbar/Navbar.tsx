@@ -3,7 +3,11 @@ import "./Navbar.css";
 import {assets} from "../../assets/assets";
 import { Link } from "react-router-dom";
 
-const Navbar = () =>{
+type NavbarProps = {
+    setShowLogin:React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Navbar = ({setShowLogin}:NavbarProps) =>{
 
     const [menu,setMenu] = useState("menu");
     return (
@@ -23,7 +27,7 @@ const Navbar = () =>{
 
                     </div>
                 </div>
-                <button>sign-in</button>
+                <button onClick={()=>setShowLogin(true)}>sign-in</button>
             </div>
         </nav>
     )
