@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import {assets} from "../../assets/assets";
 import { Link } from "react-router-dom";
+import { useStore } from "../../hooks/useStore";
 
 type NavbarProps = {
     setShowLogin:React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +11,8 @@ type NavbarProps = {
 const Navbar = ({setShowLogin}:NavbarProps) =>{
 
     const [menu,setMenu] = useState("menu");
+
+    const {getTotalCartAmount} = useStore();
     return (
         <nav className="navbar">
            <Link to='/'><img src={assets.logo} alt="" className="logo" /></Link>
@@ -23,7 +26,7 @@ const Navbar = ({setShowLogin}:NavbarProps) =>{
                 <img src={assets.search_icon} alt="" />
                 <div className="navbar-search-icon">
                     <Link to="/cart"><img src={assets.basket_icon} alt="" /></Link>
-                    <div className="dot">
+                    <div className={getTotalCartAmount()>0?"dot":""}>
 
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import { useStore } from '../../hooks/useStore'
 
 const Cart = () => {
 
-  const {cartItems,food_list,removeFromCart} = useStore();
+  const {cartItems,food_list,removeFromCart,getTotalCartAmount} = useStore();
 
   return (
     <div className='cart'>
@@ -44,21 +44,22 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>{0}</p>
-              <hr />
+              <p>${getTotalCartAmount()}</p>
             </div>
+              <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>{2}</p>
-              <hr />
+              <p>${2}</p>
             </div>
+              <hr />
             <div className="cart-total-details">
               <p>Total</p>
-              <b>0</b>
+              <b>${getTotalCartAmount()+2}</b>
 
             </div>
             <button>PROCEED TO CHECKOUT</button>
           </div>
+        </div>
           <div className="cart-promocode">
             <div>
               <p>If you have a promo code, Enter it here</p>
@@ -68,7 +69,6 @@ const Cart = () => {
               </div>
             </div>
           </div>
-        </div>
       </div>
       
     </div>

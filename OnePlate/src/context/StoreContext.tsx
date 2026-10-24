@@ -10,9 +10,11 @@ type StoreContextType = {
     cartItems: Record<string,number>;
     setCartItems: React.Dispatch<
     React.SetStateAction<Record<string,number>>>;
+   
 
     addToCart: (itemId: string) => void;
     removeFromCart: (itemId: string) => void;
+    getTotalCartAmount: ()=> number;
 } 
 export const StoreContext = createContext<StoreContextType | null>(null);
  
@@ -34,9 +36,19 @@ const StoreContextProvider = ({children}:StoreContextProviderProps) => {
         setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
     } 
 
-    useEffect(()=>{
-        console.log(cartItems);
-    },[cartItems])
+    const getTotalCartAmount = () => {
+        let totalAmount = 0;
+        for(const item in cartItems){
+            let itemInfo = food_list.find((product)=>
+                product._id===item
+            );
+            if (itemInfo && cartItems[item]>0){
+            totalAmount += itemInfo.price * cartItems[item]
+            }
+        
+        }
+        return totalAmount;
+    }
 
 
     const contextValue: StoreContextType = {
@@ -44,7 +56,8 @@ const StoreContextProvider = ({children}:StoreContextProviderProps) => {
         cartItems,
         setCartItems,
         addToCart,
-        removeFromCart
+        removeFromCart,
+        getTotalCartAmount
     };
     return(
         <StoreContext.Provider value={contextValue}>
