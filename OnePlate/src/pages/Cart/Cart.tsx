@@ -1,10 +1,13 @@
 import React from 'react'
 import "./Cart.css"
 import { useStore } from '../../hooks/useStore'
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 
   const {cartItems,food_list,removeFromCart,getTotalCartAmount} = useStore();
+
+  const navigate = useNavigate();
 
   return (
     <div className='cart'>
@@ -49,15 +52,15 @@ const Cart = () => {
               <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${2}</p>
+              <p>${getTotalCartAmount()==0?0:2}</p>
             </div>
               <hr />
             <div className="cart-total-details">
               <p>Total</p>
-              <b>${getTotalCartAmount()+2}</b>
+              <b>${getTotalCartAmount()+(getTotalCartAmount()===0?0:2)}</b>
 
             </div>
-            <button>PROCEED TO CHECKOUT</button>
+            <button onClick={()=>navigate('/order')}>PROCEED TO CHECKOUT</button>
           </div>
         </div>
           <div className="cart-promocode">
